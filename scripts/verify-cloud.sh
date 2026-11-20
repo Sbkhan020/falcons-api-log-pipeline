@@ -12,7 +12,7 @@
 # Token type: Grafana Cloud Loki push uses basic auth (user ID + API token),
 # not a Bearer service-account token, so basic auth in the config file is
 # the right form here; re-check when the Cloud stack is created.
-set -u
+set -uo pipefail
 : "${CLOUD_LOKI_URL:?set CLOUD_LOKI_URL}"
 : "${CLOUD_USER_ID:?set CLOUD_USER_ID}"
 : "${CLOUD_API_TOKEN:?set CLOUD_API_TOKEN}"
@@ -21,6 +21,6 @@ printf 'user = "%s:%s"\n' "$CLOUD_USER_ID" "$CLOUD_API_TOKEN" > "$cfg"
 trap 'rm -f "$cfg"' EXIT
 for label in auth.log syslog api-access; do
   echo "=== Cloud Loki: $label ==="
-  curl -s -K "$cfg" -G "$CLOUD_LOKI_URL" \
+  curl -sf -K "$cfg" -G "$CLOUD_LOKI_URL" \
     --data-urlencode "query={log_source=\"$label\"}" | python3 -m json.tool 2>/dev/null || echo "(could not parse JSON — check the Cloud endpoint and credentials)"
 done
