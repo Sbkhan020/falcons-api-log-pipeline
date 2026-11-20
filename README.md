@@ -61,7 +61,7 @@ inside the container and the browser could not reach it.
 | `promtail/promtail-config.yaml` | Promtail: auth.log, syslog, sample API log -> Loki |
 | `grafana/provisioning/datasources/loki.yaml` | Loki datasource, auto-added to Grafana |
 | `grafana/dashboards/falcons-api-logs.json` | Dashboard: 3 panels, one per log source |
-| `logs/api-access-sample.log` | Sample Falcons API access log for testing |
+| `logs/api-access.log` | Sample Falcons API access log for testing (named like the real API log) |
 | `scripts/verify.sh` | Checks containers, Loki ready, and logs in Loki |
 
 ## Grafana Cloud
