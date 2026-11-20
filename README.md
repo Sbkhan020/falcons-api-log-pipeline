@@ -15,10 +15,10 @@ events and API access can be watched in one place.
 
 Done-means checklist (all covered):
 
-- [x] Loki and Grafana containers are running and reachable
-- [x] Filebeat successfully ships logs to Loki
-- [x] Grafana dashboard displays at least three panels, one per log source
-- [ ] Dashboard is accessible via a public link on Grafana Cloud free tier — see "Grafana Cloud" below
+- [ ] Loki and Grafana containers are running and reachable — pending proof, run on VM/cloud first
+- [ ] Filebeat successfully ships logs to Loki — pending proof
+- [ ] Grafana dashboard displays at least three panels, one per log source — pending proof
+- [ ] Dashboard is accessible via a public link on Grafana Cloud free tier — see "Grafana Cloud" below (free tier, no card needed)
 
 ## Quick start — on the Ubuntu VM
 
