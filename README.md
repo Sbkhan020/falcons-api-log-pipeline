@@ -3,7 +3,7 @@
 **Ezitech Internship — Cyber Security, SOC Analyst (Blue Team)**
 **Intern:** Muhammad Sumyan Safdar (ETI-40371)
 **Project:** Falcons Sports Club API Security Monitoring & Incident Response
-**Task:** Set Up Log Collection Pipeline and Dashboard — due Sun 22 Nov 2026
+**Task:** Set Up Log Collection Pipeline and Dashboard — due Mon 23 Nov 2026 (extended 1 day by supervisor)
 **Host:** Ubuntu 22.04 VM, 2 GB RAM / 2 CPUs (home lab)
 
 ## What this does
