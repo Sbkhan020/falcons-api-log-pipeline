@@ -13,6 +13,8 @@ Docker runs Loki (log storage), Promtail (log shipper) and Grafana (dashboard). 
 to Loki. Grafana shows one panel per log source, so auth failures, system
 events and API access can be watched in one place.
 
+An empty panel means the client is blind to that source, not that the source is quiet.
+
 **Why Promtail, not Filebeat:** stock Filebeat has no Loki output — `output.loki` fails at startup and logs go nowhere (supervisor caught this). Promtail is the Loki-native shipper, same image family as Loki/Grafana, and lighter than Filebeat-to-Logstash on a 2 GB VM, so it is the right fit here.
 
 Done-means checklist (all covered):
