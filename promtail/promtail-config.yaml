@@ -1,0 +1,32 @@
+# Promtail — Loki-native log shipper (Task 2, per supervisor guidance)
+# Stock Filebeat has NO Loki output, so output.loki fails at startup.
+# Promtail is made for Loki, lightweight, same image family as Loki/Grafana.
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+positions:
+  filename: /tmp/positions.yaml
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+scrape_configs:
+  - job_name: auth-log
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: falcons-api
+          log_source: auth.log
+          __path__: /var/log/auth.log
+  - job_name: syslog
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: falcons-api
+          log_source: syslog
+          __path__: /var/log/syslog
+  - job_name: api-access
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: falcons-api
+          log_source: api-access
+          __path__: /var/log/falcons-api/api-access.log
