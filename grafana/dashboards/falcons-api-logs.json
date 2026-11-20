@@ -1,0 +1,28 @@
+{
+  "title": "Falcons API Logs",
+  "uid": "falcons-api-logs",
+  "tags": ["falcons", "loki", "security"],
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1, "title": "auth.log — login attempts", "type": "logs",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "targets": [{"expr": "{log_source=\"auth.log\"}", "refId": "A"}],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+    },
+    {
+      "id": 2, "title": "syslog — system events", "type": "logs",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "targets": [{"expr": "{log_source=\"syslog\"}", "refId": "A"}],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+    },
+    {
+      "id": 3, "title": "API access logs", "type": "logs",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "targets": [{"expr": "{log_source=\"api-access\"}", "refId": "A"}],
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8}
+    }
+  ],
+  "schemaVersion": 39,
+  "version": 1
+}
