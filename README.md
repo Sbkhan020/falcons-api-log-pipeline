@@ -8,10 +8,12 @@
 
 ## What this does
 
-Docker runs Loki (log storage) and Grafana (dashboard). Filebeat reads
+Docker runs Loki (log storage), Promtail (log shipper) and Grafana (dashboard). Promtail reads
 `/var/log/auth.log`, `/var/log/syslog` and a sample API log, and ships them
 to Loki. Grafana shows one panel per log source, so auth failures, system
 events and API access can be watched in one place.
+
+**Why Promtail, not Filebeat:** stock Filebeat has no Loki output — `output.loki` fails at startup and logs go nowhere (supervisor caught this). Promtail is the Loki-native shipper, same image family as Loki/Grafana, and lighter than Filebeat-to-Logstash on a 2 GB VM, so it is the right fit here.
 
 Done-means checklist (all covered):
 
@@ -56,7 +58,7 @@ inside the container and the browser could not reach it.
 |---|---|
 | `docker-compose.yml` | Loki + Grafana, ports 3100 and 3000 published |
 | `loki-config.yaml` | Loki default config (filesystem storage, 2 GB VM friendly) |
-| `filebeat/filebeat.yml` | Filebeat: auth.log, syslog, sample API log -> Loki |
+| `promtail/promtail-config.yaml` | Promtail: auth.log, syslog, sample API log -> Loki |
 | `grafana/provisioning/datasources/loki.yaml` | Loki datasource, auto-added to Grafana |
 | `grafana/dashboards/falcons-api-logs.json` | Dashboard: 3 panels, one per log source |
 | `logs/api-access-sample.log` | Sample Falcons API access log for testing |
@@ -73,9 +75,7 @@ paste that link as the Live URL on the Ezitech submit form.
 
 2 GB RAM is tight for Docker + Loki + Grafana together. If a container
 exits, check `docker ps -a` and `docker logs grafana` / `docker logs loki`
-before assuming the command was wrong — the supervisor's advice. Filebeat
-to Loki also needs the Loki output block exactly right, or logs silently
-go nowhere; `scripts/verify.sh` queries Loki to prove logs arrived.
+before assuming the command was wrong — the supervisor's advice. Promtail pushes to Loki at `http://loki:3100/loki/api/v1/push`; `scripts/verify.sh` queries Loki to prove logs arrived.
 
 ## What was left out
 

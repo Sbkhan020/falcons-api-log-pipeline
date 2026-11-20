@@ -8,6 +8,16 @@ services:
       - ./loki-config.yaml:/etc/loki/local-config.yaml
       - loki-data:/loki
     command: -config.file=/etc/loki/local-config.yaml
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    volumes:
+      - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
+      - /var/log:/var/log:ro
+      - ./logs:/var/log/falcons-api:ro
+    command: -config.file=/etc/promtail/config.yaml
+    depends_on:
+      - loki
   grafana:
     image: grafana/grafana-oss:latest
     container_name: grafana
