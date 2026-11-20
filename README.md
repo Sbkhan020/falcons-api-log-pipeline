@@ -17,7 +17,7 @@ events and API access can be watched in one place.
 
 Done-means checklist (all covered):
 
-- [ ] Loki and Grafana containers are running and reachable — pending proof, run on VM/cloud first
+- [ ] Loki and Grafana containers are running and reachable — pending proof, run on the VM first
 - [ ] Promtail successfully ships logs to Loki — pending proof (run on VM first, then tick with the docker ps / Loki query output)
 - [ ] Grafana dashboard displays at least three panels, one per log source — pending proof
 - [ ] Dashboard is accessible via a public link on Grafana Cloud free tier — see "Grafana Cloud" below (free tier, no card needed)
@@ -66,17 +66,16 @@ inside the container and the browser could not reach it.
 
 ## Grafana Cloud
 
-Honest note: Grafana Cloud cannot reach the Loki running on the VM — the
-VM's Loki is local only, so "add local Loki as a datasource on Cloud"
-does not work. The correct route is Grafana Cloud's hosted Loki (free
-tier, no card): create a Grafana Cloud account, take its hosted Loki
-push endpoint, and point Promtail's `clients:` at that Cloud endpoint
-(with the Cloud API key) as well as, or instead of, the local Loki.
-Then build the same dashboard on Cloud against the hosted Loki
-datasource (import `grafana/dashboards/falcons-api-logs.json`), and
-Share -> public link, and paste that link as the Live URL on the
-Ezitech submit form. No Cloud account exists yet — it needs Sumyan's
-email verification to create.
+Honest note: Grafana Cloud cannot reach the Loki running on the VM —
+the VM's Loki is local only. The route is Cloud's hosted Loki,
+Promtail pushing to the Cloud push endpoint, dashboard on Cloud
+against that. In practice: create a Grafana Cloud account (free tier,
+no card), take its hosted Loki push endpoint, point Promtail's
+`clients:` at that Cloud endpoint (with the Cloud API key), import
+`grafana/dashboards/falcons-api-logs.json` on Cloud, then Share ->
+public link, and paste that link as the Live URL on the Ezitech
+submit form. No Cloud account exists yet — it needs Sumyan's email
+verification to create.
 
 ## What was hard
 
